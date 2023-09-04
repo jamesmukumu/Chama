@@ -132,28 +132,28 @@ else{
 })
 
     //get month
-    router.get('/monthget',async(req,res)=>{
-  try {
-const desiredmonth = req.query.month
-const foundmonth = await Member.find({month:desiredmonth})
-if(!foundmonth){
-res.json({error:'moonth not found'})
-}
-else{
-    res.json({message:'find month',data:foundmonth})
-}
+    router.get('/monthget', async (req, res) => {
+        try {
+          const desiredmonth = req.query.month;
+          const foundmonth = await Member.find({ month: desiredmonth });
+      
+          if (foundmonth.length === 0) { // Check if any records were found
+            res.json({ error: 'Month not found' });
+          } else {
+            res.json({ message: 'Found month', data: foundmonth });
+          }
+        } catch (error) {
+          res.json({ error: 'Internal Server Error' });
+        }
+      });
+      
+      
+
+
+
+
+
     
-  } catch (error) {
-    res.json({error:'error'})
-  }
-
-
-
-
-
-
-    })
-
 
     
 

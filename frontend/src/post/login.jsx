@@ -73,8 +73,8 @@ return(
     />
 </div>
 <button>Login</button>
-<p>{loginmessage}</p>
-<p>{passwordlength}</p>
+<p className="error">{loginmessage}</p>
+<p className="error">{passwordlength}</p>
 
 
 <Link to='/register'><strong>Register</strong></Link>
