@@ -9,6 +9,7 @@ function Firstname(){
 const[Firstname,setFirstname] = useState('')
 const [memberinfo,setMemberinfo] = useState([])
 const  [error,setError] = useState('')
+const  [downloadData,setDownloadData] = useState(null)
 async function  Getfirstname(e){
 e.preventDefault()
 try {
@@ -18,6 +19,8 @@ params:{firstname:Firstname}
 
 if(response.data.message==='found by firstname'){
 setMemberinfo(response.data.data)
+setDownloadData(response.data.data)
+
 }
 if(response.data.error==='error'){
 setError('Member Not Found')
@@ -30,6 +33,27 @@ setError('Member Not Found')
 }
 
 }
+
+
+
+function downloadJSON() {
+    if (downloadData) {
+      const jsonData = JSON.stringify(downloadData, null, 2);
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "month_data.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  }
+
+ 
+
+
 
 return(
     <div>
@@ -69,9 +93,7 @@ return(
    </form>
 
 
-
-
-
+<button onClick={downloadJSON}>Download</button>
 
 
    

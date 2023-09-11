@@ -137,7 +137,7 @@ else{
           const desiredmonth = req.query.month;
           const foundmonth = await Member.find({ month: desiredmonth });
       
-          if (foundmonth.length === 0) { // Check if any records were found
+          if (foundmonth.length === 0) { 
             res.json({ error: 'Month not found' });
           } else {
             res.json({ message: 'Found month', data: foundmonth });
@@ -149,7 +149,28 @@ else{
       
       
 
+//find and delete
+router.delete('/delete',async(req,res)=>{
+try {
+const deleteMember = req.query.secondname 
+const Foundmember  = await Member.findOneAndDelete({secondname:deleteMember})  
+if(!Foundmember){
+res.json({message:'Member Not found'})
+}
+if(Foundmember){
+res.json({message:'Deleted',data:Foundmember})
 
+}
+
+
+
+
+
+} catch (error) {
+   res.json({error:'Error'}) 
+}
+
+})
 
 
 

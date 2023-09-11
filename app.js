@@ -28,11 +28,6 @@ try {
 
 
 
-try {
-  app.use(require('./backend/routes/contribution'))
-} catch (error) {
-  error
-}
 
 
 
@@ -43,7 +38,11 @@ try {
 }
 
 
-
+try {
+  app.use(require('./backend/routes/images'))
+} catch (error) {
+  error
+}
 
 
 

@@ -10,7 +10,8 @@ import Getmonth from "./get/getmonth";
 import Firstname from "./get/getbyfirstname";
  import Secondname from "./get/getbysecondname";
  import Sumspecificyear from "./get/sumspecificyear";
-import Updatedetails from "./patch/patchdetailsbyfirstname";
+
+import Deletemember from "./delete/deletion";
 import Nav from "./nav";
 import { AuthProvider } from "./authorization";
 function App(){
@@ -33,8 +34,8 @@ return(
 <Route path="/firstname" element={<Firstname/>}/>
 <Route path="/secondname" element={<Secondname/>}/>
 <Route path="/sumspecificyear" element={<Sumspecificyear/>}/>
-<Route path="/updatedetails" element={<Updatedetails/>}/>
 
+<Route path="/deletemember" element={<Deletemember/>}/>
   </Routes>
   
   

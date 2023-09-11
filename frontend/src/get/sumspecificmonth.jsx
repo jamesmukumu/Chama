@@ -6,6 +6,7 @@ function Sumspecificmonth(){
 const [Month,setMonth] = useState('')
 const [error,setError] = useState('')
 const  [memberdata,setMemberdata] = useState([])
+const  [downloadData,setDownloadData] = useState(null)
 function Selectmonth(e){
 setMonth(e.target.value)
 
@@ -21,6 +22,7 @@ try {
     })
 if(response.data.message==='month found'){
 setMemberdata(response.data.data)
+setDownloadData(response.data.data)
 }
 if(response.data.message=='month not found'){
 
@@ -34,6 +36,29 @@ setError('No total amount')
 }
 
 }
+
+function downloadJSON() {
+  if (downloadData) {
+    const jsonData = JSON.stringify(downloadData, null, 2);
+    const blob = new Blob([jsonData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "month_data.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+}
+
+
+
+
+
+
+
+
 
 return(
 <div className="container">
@@ -91,7 +116,7 @@ return(
 
 
 
-
+<button onClick={downloadJSON}>Download</button>
 </div>
 
 

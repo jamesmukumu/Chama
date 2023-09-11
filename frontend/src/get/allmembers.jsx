@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 function Allmembers() {
   const [allmembers, setAllmembers] = useState([]);
   const [error, setErrormessage] = useState('');
+  const  [downloadData,setDownloaddata] = useState(null)
 
   useEffect(() => {
     async function Getmember() {
@@ -11,6 +12,7 @@ function Allmembers() {
         const response = await axios.get('http://localhost:5000/allmembers');
         if (response.data.message === 'found') {
           setAllmembers(response.data.data);
+          setDownloaddata(response.data.data)
         } else {
           setErrormessage('Error in finding all contributions');
         }
@@ -21,6 +23,28 @@ function Allmembers() {
 
     Getmember();
   }, []);
+
+
+
+
+
+  function downloadJSON() {
+    if (downloadData) {
+      const jsonData = JSON.stringify(downloadData, null, 2);
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "month_data.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  }
+
+
+
 
   return (
     <div>
@@ -51,6 +75,7 @@ function Allmembers() {
       </table>
       <p>{error}</p>
       <Link to='/nav'><strong>Home</strong></Link>
+      <button onClick={downloadJSON}>Download</button>
     </div>
   );
 }

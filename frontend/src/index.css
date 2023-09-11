@@ -158,7 +158,8 @@ position: relative;
   min-height: 100vh;
 background-color: whitesmoke;
 }
-
-
-
-
+img{
+  border-radius: 100px;
+  width: 200px;
+  height: 200px;
+}

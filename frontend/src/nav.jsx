@@ -9,8 +9,10 @@ import { BsFillPenFill } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import { BsBackspaceFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"
 
 function Nav() {
+  const [imagedata,setImagedata] = useState([])
   let navigate = useNavigate()
   const [menuVisible, setMenuVisible] = useState(false);
   const { isAuthenticated } = useAuth();  
@@ -28,16 +30,59 @@ useEffect(()=>{
 
 },[])
 
+useEffect(()=>{
+  async function Fetchimages(){
+    try {
+      const response = await axios.get('http://localhost:5000/getimages')
+     
+    if(response.data.message==='Found images'){
+    setImagedata(response.data.data)
+    
+    }
+    
+    } catch (error) {
+      error
+    }}
+
+
+
+    Fetchimages()
+},[])
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="navv">
       <header>
-        <h1>
-          Navigation
-          <FaBars onClick={toggleMenu} className="menu-icon" />
         
-        </h1>
+       
+          <FaBars onClick={toggleMenu} className="menu-icon" />
+      
       </header>
+
+      <div>
+     {imagedata.map((item)=>(
+
+      <div>
+      <img src={item.imageUrl} alt="" />
+      
+
+      </div>
+
+
+     ))}
+      </div>
+
+
       <div className={`nav-links ${menuVisible ? "show" : ""}`}>
 
         <div>
@@ -94,14 +139,20 @@ useEffect(()=>{
           </i>
           View Sum for a specific year
         </Link>
-        <Link to="/updatedetails">
+     
+
+
+
+        <Link to="/deletemember">
           <i>
             <BsFillPenFill />
           </i>
-          Append member Details
+         Delete member
         </Link>
       </div>
       <h1>&copy; Leah Wambuku @ 2023</h1>
+
+     
     </div>
   );
 }

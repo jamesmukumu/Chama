@@ -5,20 +5,43 @@ import { Link } from "react-router-dom";
 function Getmonth() {
   const [Month, setMonth] = useState('');
   const [info, setInfo] = useState([]);
-
+  const  [downloadData,setDownloadData] = useState(null)
   function Selectmonth(e) {
     setMonth(e.target.value); 
   }
+
+
+
+  function downloadInfo() {
+    if (downloadData) {
+      const jsonData = JSON.stringify(downloadData, null, 2);
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "month_data.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  }
+
+
+
+  
 
   async function Getmonthbckend(e) {
     e.preventDefault();
     try {
       const response = await axios.get('http://localhost:5000/monthget', {
-        params: { month: Month }
+        params: { month: Month },
+        responseType:'blob'
       });
 
       if (response.data.message === 'Found month') {
         setInfo(response.data.data);
+        setDownloadData(response.data.data)
       }
     } catch (error) {
       console.error(error);
@@ -61,6 +84,7 @@ function Getmonth() {
         <button>Get info</button>
         <Link to='/'><strong>Home</strong></Link>
       </form>
+     <button onClick={downloadInfo={}}>Download</button>
     </div>
   );
 }

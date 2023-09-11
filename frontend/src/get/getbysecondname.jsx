@@ -9,6 +9,7 @@ function Secondname(){
 const[Secondname,setSecondname] = useState('')
 const [memberinfo,setMemberinfo] = useState([])
 const  [error,setError] = useState('')
+const [downloaddata,setDownloaddata] = useState(null)
 async function  GetSecondname(e){
 e.preventDefault()
 try {
@@ -18,6 +19,7 @@ params:{secondname:Secondname}
 
 if(response.data.message==='found by secondname'){
 setMemberinfo(response.data.data)
+setDownloaddata(response.data.data)
 }
 if(response.data.error==='error'){
 setError('Member Not Found')
@@ -30,6 +32,37 @@ setError('Member Not Found')
 }
 
 }
+
+function Downloadinfo(){
+  if (downloaddata) {
+    const jsonData = JSON.stringify(downloaddata, null, 2);
+    const blob = new Blob([jsonData], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "month_data.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 return(
     <div>
@@ -74,7 +107,7 @@ return(
 
 
 
-   
+   <button onClick={Downloadinfo}>Download</button>
     </div>
 )
 
