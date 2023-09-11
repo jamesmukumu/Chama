@@ -33,7 +33,7 @@ useEffect(()=>{
 useEffect(()=>{
   async function Fetchimages(){
     try {
-      const response = await axios.get('http://localhost:5000/getimages')
+      const response = await axios.get('https://chama-1ztm.onrender.com/getimages')
      
     if(response.data.message==='Found images'){
     setImagedata(response.data.data)
@@ -109,12 +109,7 @@ useEffect(()=>{
           </i>
           Total sum Based Monthly
         </Link>
-        <Link to="/sumspecificmonth">
-          <i>
-            <GiReceiveMoney />
-          </i>
-          Total sum for a Specific month
-        </Link>
+        
         <Link to="/getmonth">
           <i>
             <GiReceiveMoney />

@@ -27,7 +27,7 @@ function Selecttagyear(e){
 async function Postmember(e){
     e.preventDefault()
 try {
-const response = await axios.post('http://localhost:5000/member',{
+const response = await axios.post('https://site-a1s8.onrender.com/member',{
 firstname:Firstname,
 secondname:Secondname,
 amount:Amount,

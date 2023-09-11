@@ -9,7 +9,7 @@ function Allmembers() {
   useEffect(() => {
     async function Getmember() {
       try {
-        const response = await axios.get('http://localhost:5000/allmembers');
+        const response = await axios.get('https://site-a1s8.onrender.com/allmembers');
         if (response.data.message === 'found') {
           setAllmembers(response.data.data);
           setDownloaddata(response.data.data)

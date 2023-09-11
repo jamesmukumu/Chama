@@ -95,41 +95,8 @@ router.get('/secondname',async(req,res)=>{
 
  
 
-//finding sum for a specific month
-
-router.get('/sumforspecificmonth',async(req,res)=>{
-
-try {
-    const desiredmonth = req.query.month
-const aggregatemonth = [
-{
-    $match:{month:desiredmonth}
-},
-{
-    $group:{
-        _id:`$month`,
-        totalamount:{$sum:`$amount`}
-
-    }
-}
-]
-
-const results = await Member.aggregate(aggregatemonth)
-if(!results){
-    res.json({error:'month not found'})
-}
-else{
-    res.json({message:'month found',data:results})
-}
-
-} catch (error) {
-    res.json({error:'error'})
-}
 
 
-
-
-})
 
     //get month
     router.get('/monthget', async (req, res) => {

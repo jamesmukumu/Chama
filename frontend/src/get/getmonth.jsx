@@ -34,9 +34,9 @@ function Getmonth() {
   async function Getmonthbckend(e) {
     e.preventDefault();
     try {
-      const response = await axios.get('http://localhost:5000/monthget', {
+      const response = await axios.get('https://site-a1s8.onrender.com/monthget', {
         params: { month: Month },
-        responseType:'blob'
+        
       });
 
       if (response.data.message === 'Found month') {

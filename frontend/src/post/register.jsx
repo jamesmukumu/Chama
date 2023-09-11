@@ -22,7 +22,7 @@ setPasswordlength('Password Must Be at least 5 charachters long')
 }
 else{
     try {
-        const response = await axios.post('http://localhost:5000/register',{
+        const response = await axios.post('https://site-a1s8.onrender.com/register',{
         Username:username,
         password:Password,
         email:Email

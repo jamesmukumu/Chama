@@ -5,7 +5,7 @@ import Register from "./post/register";
  import Member from "./post/member";
  import Allmembers from "./get/allmembers";
  import Sumamount from "./get/sumallmonths";
- import Sumspecificmonth from "./get/sumspecificmonth";
+
 import Getmonth from "./get/getmonth";
 import Firstname from "./get/getbyfirstname";
  import Secondname from "./get/getbysecondname";
@@ -29,7 +29,7 @@ return(
 <Route path="/member" element={<Member/>}/>
 <Route path="/allmembers" element={<Allmembers/>}/>
 <Route path="/sumamount" element={<Sumamount/>}/>
-<Route path="/sumspecificmonth" element={<Sumspecificmonth/>}/>
+
 <Route path="/getmonth" element={<Getmonth/>}/>
 <Route path="/firstname" element={<Firstname/>}/>
 <Route path="/secondname" element={<Secondname/>}/>
