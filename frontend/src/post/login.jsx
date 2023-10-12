@@ -4,12 +4,13 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../authorization";
-
+import Preloader from "../preloader";
 function Login(){
-    let navigate = useNavigate()
+let navigate = useNavigate()
 const [Password,setPassword] = useState('')
+const [loading,setLoading] = useState(false)
 const [username,setUsername] = useState('')
-const [loginmessage,setLoginmessage] = useState('')
+const [errormsg,setErrormsg] = useState('')
 const [passwordlength,setPasswordlenght] = useState('')
 const { setIsAuthenticated } = useAuth();
 async function Postlogin(e){
@@ -20,27 +21,34 @@ if(Password.length <=5){
 }
 else{
     try {
-        const response = await axios.post('https://site-a1s8.onrender.com/login',{
+        const response = await axios.post('http://localhost:5000/login',{
           Username:username,
           password:Password
         })
       
         if(response.data.message==='Successfully logged in'){
-        setLoginmessage('Login Successful')
+        setLoading(true)
+       setTimeout(()=>{
         navigate('/nav')
+       },3000)
         setIsAuthenticated(true)
         }
-          
-
-        if(response.data.error==='Username not Found'){
-         setLoginmessage('Invalid Username')
+          else if(response.data.error==='Username not Found'){
+           setTimeout(()=>{
+            navigate('/')
+           },3000)
+            setLoading(true)
+         setErrormsg('Invalid Username')
         }
       if(response.data.error==='Invalid password'){
-     setLoginmessage('Wrong Password...')
+     setErrormsg('Wrong Password...')
+     setTimeout(()=>{
+        navigate('/')
+     },3000)
       }
       
       } catch (error) {
-          setLoginmessage('Internal Server Error')
+          setErrormsg('Internal Server Error')
       }
       
 
@@ -50,13 +58,26 @@ else{
 
 
 return(
-<div>
+<div className="cont">
+<div className="welcome">
+<strong className="verse" style={{fontFamily:" 'Sono', monospace"}}>Matthew:23:11</strong>
+</div>
+<div className="welcome">
+<strong className="text" style={{fontFamily:"'Buda', serif"}}>"But the greatest among you shall be your servant"</strong>
+</div>
+
+
+
+
+{loading?(
+    <Preloader/>):(
 <form onSubmit={Postlogin}>
     <strong>Login</strong>
 <div>
-    <label>Enter Username</label>
+    
     <input type="text"
     required
+    placeholder="Enter Your Username"
     onChange={(e)=>setUsername(e.target.value)}
     
     />
@@ -65,21 +86,32 @@ return(
 
 
 <div>
-    <label>Enter password</label>
-    <input type="text"
+    
+    <input type="password"
+    placeholder="Enter Your Password"
     required
     onChange={(e)=>setPassword(e.target.value)}
     
     />
 </div>
 <button>Login</button>
-<p className="error">{loginmessage}</p>
+<p className="error">{errormsg}</p>
 <p className="error">{passwordlength}</p>
 
 
-<Link to='/register'><strong>Register</strong></Link>
+<strong><Link to='/register'>Register</Link></strong>
 
 </form>
+
+
+
+    )
+}
+
+
+
+
+
 
 
 

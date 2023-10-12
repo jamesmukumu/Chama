@@ -11,7 +11,7 @@ const  [memberdata,setMemberdata] = useState([])
 async function Deletedmember(e){
 e.preventDefault()
     try {
-const response = await axios.delete('https://site-a1s8.onrender.com/delete',{
+const response = await axios.delete('https://chama-1ztm.onrender.com/delete',{
 params:{secondname:Secondname}
 })
 

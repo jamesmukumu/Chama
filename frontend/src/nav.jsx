@@ -7,11 +7,13 @@ import { FcSearch } from "react-icons/fc";
 import { GiReceiveMoney } from "react-icons/gi";
 import { BsFillPenFill } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
-import { BsBackspaceFill } from "react-icons/bs";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import Preloader from "./preloader";
 
 function Nav() {
+  const [loading,setLoading] = useState(true)
   const [imagedata,setImagedata] = useState([])
   let navigate = useNavigate()
   const [menuVisible, setMenuVisible] = useState(false);
@@ -33,10 +35,11 @@ useEffect(()=>{
 useEffect(()=>{
   async function Fetchimages(){
     try {
-      const response = await axios.get('https://chama-1ztm.onrender.com/getimages')
+      const response = await axios.get('http://localhost:5000/getimages')
      
     if(response.data.message==='Found images'){
     setImagedata(response.data.data)
+    setLoading(false)
     
     }
     
@@ -69,7 +72,19 @@ useEffect(()=>{
       
       </header>
 
-      <div>
+
+
+
+
+
+
+
+
+
+      {loading?(
+        <Preloader/>
+      ):(
+        <div>
      {imagedata.map((item)=>(
 
       <div>
@@ -81,16 +96,15 @@ useEffect(()=>{
 
      ))}
       </div>
+        
+      )}
+
+      
 
 
       <div className={`nav-links ${menuVisible ? "show" : ""}`}>
 
-        <div>
-        <BsBackspaceFill
-            onClick={toggleMenu}
-            className={`backspace-icon ${menuVisible ? "show" : ""}`}
-          />
-        </div>
+        
         <Link to="/member">
           <i>
             <BsFilePersonFill />
@@ -145,7 +159,7 @@ useEffect(()=>{
          Delete member
         </Link>
       </div>
-      <h1>&copy; Leah Wambuku @ 2023</h1>
+      <strong>&copy; Leah Wambuku @ 2023</strong>
 
      
     </div>

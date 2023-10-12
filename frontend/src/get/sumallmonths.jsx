@@ -8,7 +8,7 @@ function Sumamount() {
   useEffect(() => {
     async function Getmembers() {
       try {
-        const response = await axios.get("https://site-a1s8.onrender.com/sumforallmonths");
+        const response = await axios.get("http://localhost:5000/sumforallmonths");
         if (response.data.message === "sum months") {
           setMonth(response.data.data);
         } else {

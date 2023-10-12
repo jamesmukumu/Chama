@@ -4,9 +4,10 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../authorization";
-
+import Preloader from "../preloader";
 
 function Register(){
+    const [loading,setLoading] = useState(false)
     let navigate = useNavigate()
 const [username,setUsername] = useState('')
 const  [Email,setEmail]   = useState('')
@@ -22,7 +23,7 @@ setPasswordlength('Password Must Be at least 5 charachters long')
 }
 else{
     try {
-        const response = await axios.post('https://site-a1s8.onrender.com/register',{
+        const response = await axios.post('http://localhost:5000/register',{
         Username:username,
         password:Password,
         email:Email
@@ -30,7 +31,10 @@ else{
         
         if(response.data.message==='Saved'){
         setRegistermessage('Registered Successfully')
+        setLoading(true)
+       setTimeout(()=>{
         navigate('/nav')
+       },3200)
         setIsAuthenticated(true)
         }
         else{
@@ -47,11 +51,23 @@ else{
 
 return(
 <div>
+<div className="welcome">
+<strong className="verse" style={{fontFamily:" 'Sono', monospace"}}>Matthew:23:11</strong>
+</div>
+<div className="welcome">
+<strong className="text" style={{fontFamily:"'Buda', serif"}}>"But the greatest among you shall be your servant"</strong>
+</div>
+
+
+
+{loading?(
+    <Preloader/>):(
 <form onSubmit={Postregister}>
     <strong>Register</strong>
     <div>
-    <label>Enter Username</label>
-<input type="text" 
+    
+<input type="text"
+placeholder="Enter Username" 
 onChange={(e)=>setUsername(e.target.value)}
 required
 />
@@ -60,8 +76,8 @@ required
 
 
     <div>
-    <label>Enter Password</label>
-<input type="text" 
+<input type="password" 
+placeholder="Enter Your Password"
 onChange={(e)=>setPassword(e.target.value)}
 required
 />
@@ -69,8 +85,9 @@ required
 
 
     <div>
-    <label>Enter Email</label>
+  
 <input type="email" 
+placeholder="Enter Your Email"
 onChange={(e)=>setEmail(e.target.value)}
 required
 />
@@ -81,9 +98,14 @@ required
 <p>{registermessage}</p>
 <p>{passwordlength}</p>
 
-
-<Link to='/'><strong>Already Have an account??</strong></Link>
+<strong><Link to='/' className="linkto">Already have an account??</Link></strong>
 </form>
+    )
+}
+
+
+
+
 
 
 

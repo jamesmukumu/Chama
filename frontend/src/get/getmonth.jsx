@@ -34,7 +34,7 @@ function Getmonth() {
   async function Getmonthbckend(e) {
     e.preventDefault();
     try {
-      const response = await axios.get('https://site-a1s8.onrender.com/monthget', {
+      const response = await axios.get('http://localhost:5000/monthget', {
         params: { month: Month },
         
       });
@@ -84,7 +84,7 @@ function Getmonth() {
         <button>Get info</button>
         <Link to='/'><strong>Home</strong></Link>
       </form>
-     <button onClick={downloadInfo={}}>Download</button>
+     <button onClick={downloadInfo}>Download</button>
     </div>
   );
 }

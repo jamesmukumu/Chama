@@ -13,7 +13,7 @@ const [downloaddata,setDownloaddata] = useState(null)
 async function  GetSecondname(e){
 e.preventDefault()
 try {
-const response = await axios.get('https://site-a1s8.onrender.com/secondname',{
+const response = await axios.get('http://localhost:5000/secondname',{
 params:{secondname:Secondname}
 })
 
