@@ -1,5 +1,4 @@
-
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./authorization";
 import { BsFilePersonFill } from "react-icons/bs";
@@ -9,102 +8,61 @@ import { BsFillPenFill } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import Preloader from "./preloader";
 
 function Nav() {
-  const [loading,setLoading] = useState(true)
-  const [imagedata,setImagedata] = useState([])
-  let navigate = useNavigate()
+  const [loading, setLoading] = useState(true);
+  const [imagedata, setImagedata] = useState([]);
+  let navigate = useNavigate();
   const [menuVisible, setMenuVisible] = useState(false);
-  const { isAuthenticated } = useAuth();  
+  const { isAuthenticated } = useAuth();
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
 
-
-useEffect(()=>{
-  if (!isAuthenticated) {
-    navigate('/'); 
-     
-  }
-
-
-},[])
-
-useEffect(()=>{
-  async function Fetchimages(){
-    try {
-      const response = await axios.get('http://localhost:5000/getimages')
-     
-    if(response.data.message==='Found images'){
-    setImagedata(response.data.data)
-    setLoading(false)
-    
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/");
     }
-    
-    } catch (error) {
-      error
-    }}
+  }, []);
 
+  useEffect(() => {
+    async function Fetchimages() {
+      try {
+        const response = await axios.get("http://localhost:5000/getimages");
 
+        if (response.data.message === "Found images") {
+          setImagedata(response.data.data);
+          setLoading(false);
+        }
+      } catch (error) {
+        error;
+      }
+    }
 
-    Fetchimages()
-},[])
-
-
-
-
-
-
-
-
-
-
-
+    Fetchimages();
+  }, []);
 
   return (
     <div className="navv">
       <header>
-        
-       
-          <FaBars onClick={toggleMenu} className="menu-icon" />
-      
+        <FaBars onClick={toggleMenu} className="menu-icon" />
       </header>
 
-
-
-
-
-
-
-
-
-
-      {loading?(
-        <Preloader/>
-      ):(
+      {loading ? (
+        <Preloader />
+      ) : (
         <div>
-     {imagedata.map((item)=>(
-
-      <div>
-      <img src={item.imageUrl} alt="" />
-      
-
-      </div>
-
-
-     ))}
-      </div>
-        
+          {imagedata.map((item) => (
+            <div>
+              <img src={item.imageUrl} alt="" />
+            </div>
+          ))}
+        </div>
       )}
 
-      
-
-
       <div className={`nav-links ${menuVisible ? "show" : ""}`}>
-
-        
         <Link to="/member">
           <i>
             <BsFilePersonFill />
@@ -123,7 +81,7 @@ useEffect(()=>{
           </i>
           Total sum Based Monthly
         </Link>
-        
+
         <Link to="/getmonth">
           <i>
             <GiReceiveMoney />
@@ -148,20 +106,15 @@ useEffect(()=>{
           </i>
           View Sum for a specific year
         </Link>
-     
-
-
 
         <Link to="/deletemember">
           <i>
             <BsFillPenFill />
           </i>
-         Delete member
+          Delete member
         </Link>
       </div>
       <strong>&copy; Leah Wambuku @ 2023</strong>
-
-     
     </div>
   );
 }

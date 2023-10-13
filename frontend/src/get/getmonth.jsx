@@ -3,14 +3,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 function Getmonth() {
-  const [Month, setMonth] = useState('');
+  const [Month, setMonth] = useState("");
   const [info, setInfo] = useState([]);
-  const  [downloadData,setDownloadData] = useState(null)
+  const [downloadData, setDownloadData] = useState(null);
   function Selectmonth(e) {
-    setMonth(e.target.value); 
+    setMonth(e.target.value);
   }
-
-
 
   function downloadInfo() {
     if (downloadData) {
@@ -27,21 +25,16 @@ function Getmonth() {
     }
   }
 
-
-
-  
-
   async function Getmonthbckend(e) {
     e.preventDefault();
     try {
-      const response = await axios.get('http://localhost:5000/monthget', {
+      const response = await axios.get("http://localhost:5000/monthget", {
         params: { month: Month },
-        
       });
 
-      if (response.data.message === 'Found month') {
+      if (response.data.message === "Found month") {
         setInfo(response.data.data);
-        setDownloadData(response.data.data)
+        setDownloadData(response.data.data);
       }
     } catch (error) {
       console.error(error);
@@ -71,20 +64,36 @@ function Getmonth() {
 
         {info.map((item) => (
           <div key={item._id}>
-            <p>id:<span>{item._id}</span></p>
-            <p>firstname:<span>{item.firstname}</span></p>
-            <p>secondname:<span>{item.secondname}</span></p>
-            <p>month:<span>{item.month}</span></p>
-            <p>year:<span>{item.year}</span></p>
-            <p>amount:<span>{item.amount}</span></p>
-            <p>mpesamessage:<span>{item.mpesamessage[0]}</span></p>
+            <p>
+              id:<span>{item._id}</span>
+            </p>
+            <p>
+              firstname:<span>{item.firstname}</span>
+            </p>
+            <p>
+              secondname:<span>{item.secondname}</span>
+            </p>
+            <p>
+              month:<span>{item.month}</span>
+            </p>
+            <p>
+              year:<span>{item.year}</span>
+            </p>
+            <p>
+              amount:<span>{item.amount}</span>
+            </p>
+            <p>
+              mpesamessage:<span>{item.mpesamessage[0]}</span>
+            </p>
           </div>
         ))}
 
         <button>Get info</button>
-        <Link to='/'><strong>Home</strong></Link>
+        <Link to="/">
+          <strong>Home</strong>
+        </Link>
       </form>
-     <button onClick={downloadInfo}>Download</button>
+      <button onClick={downloadInfo}>Download</button>
     </div>
   );
 }

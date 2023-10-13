@@ -1,37 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import Preloader from "../preloader";
 function Allmembers() {
   const [allmembers, setAllmembers] = useState([]);
-  const [error, setErrormessage] = useState('');
-  const  [downloadData,setDownloaddata] = useState(null)
+  const [error, setErrormessage] = useState("");
+  const [downloadData, setDownloaddata] = useState(null);
 
-const [loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function Getmember() {
       try {
-        const response = await axios.get('http://localhost:5000/allmembers');
-        if (response.data.message === 'found') {
+        const response = await axios.get("http://localhost:5000/allmembers");
+        if (response.data.message === "found") {
           setAllmembers(response.data.data);
-          setDownloaddata(response.data.data)
-          setLoading(false)
-          setIs
+          setDownloaddata(response.data.data);
+          setLoading(false);
+          setIs;
         } else {
-          setErrormessage('Error in finding all contributions');
+          setErrormessage("Error in finding all contributions");
         }
       } catch (error) {
-        setErrormessage('Internal Server Error');
+        setErrormessage("Internal Server Error");
       }
     }
 
     Getmember();
   }, []);
-
-
-
-
 
   function downloadJSON() {
     if (downloadData) {
@@ -48,9 +44,6 @@ const [loading,setLoading] = useState(true)
     }
   }
 
-
-
-
   return (
     <div>
       <table className="table">
@@ -64,32 +57,28 @@ const [loading,setLoading] = useState(true)
             <th>Mpesa Message</th>
           </tr>
         </thead>
-       
 
-
-       {loading?(
-        <Preloader/>
-       ):(   <tbody>
-        {allmembers.map((item) => (
-          <tr > 
-            <td>{item.firstname}</td>
-            <td>{item.secondname}</td>
-            <td>{item.amount}</td>
-            <td>{item.month}</td>
-            <td>{item.year}</td>
-            <td>{item.mpesamessage[0]}</td>
-          </tr>
-        ))}
-      </tbody>)}
-
-
-
-
-
-     
+        {loading ? (
+          <Preloader />
+        ) : (
+          <tbody>
+            {allmembers.map((item) => (
+              <tr>
+                <td>{item.firstname}</td>
+                <td>{item.secondname}</td>
+                <td>{item.amount}</td>
+                <td>{item.month}</td>
+                <td>{item.year}</td>
+                <td>{item.mpesamessage[0]}</td>
+              </tr>
+            ))}
+          </tbody>
+        )}
       </table>
       <p>{error}</p>
-      <Link to='/nav'><strong>Home</strong></Link>
+      <Link to="/nav">
+        <strong>Home</strong>
+      </Link>
       <button onClick={downloadJSON}>Download</button>
     </div>
   );

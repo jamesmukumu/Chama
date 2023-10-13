@@ -4,15 +4,15 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "firebase": "^10.4.0",
     "mongoose": "^7.5.0",
     "nodemon": "^3.0.1"
   },
   "name": "mum",
   "version": "1.0.0",
   "main": "app.js",
-  "devDependencies": {},
   "scripts": {
-    "start":"node app.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -12,6 +12,10 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.message{
+  color: red;
+  font-size: 22px;
+}
 
 
 
@@ -119,10 +123,12 @@ h2 {
 form {
   text-align: center;
   padding: 20px;
-  background-color: white;
+  background-color: snow;
+  
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
  width: 79;
+
   margin: 0 auto;
 }
 
