@@ -11,7 +11,7 @@ imageUrl:req.body.imageUrl,
 imageTitle:req.body.imageTitle
 })
  await image.save()
- res.json({message:'Image Saved Successfully'})
+ res.status(200).json({message:'Image Saved Successfully'})
 
 
 
@@ -34,13 +34,6 @@ try {
 } catch (error) {
     res.json({error:'Error in finding images'})
 }
-
-
-
-
-
-
-
 })
 
 

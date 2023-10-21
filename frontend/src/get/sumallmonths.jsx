@@ -1,19 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Cookie from "js-cookie"
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 function Sumamount() {
+  let navigate = useNavigate()
   const [Month, setMonth] = useState([]);
   const [error, setError] = useState("");
   const [downloadData, setDownloadData] = useState(null);
+  const token = Cookie.get("Access cookie")
   useEffect(() => {
     async function Getmembers() {
       try {
         const response = await axios.get(
-          "http://localhost:5000/sumforallmonths"
+          "http://localhost:5000/sumforallmonths",{
+            headers:{Authorization:token}
+          }
+          
         );
         if (response.data.message === "sum months") {
           setMonth(response.data.data);
-        } else {
+        } 
+        else if(response.data.message=== "token expired"){
+          
+          navigate('/')
+          }
+        
+        
+        
+        else {
           setError("Error in Fetching information");
         }
       } catch (error) {

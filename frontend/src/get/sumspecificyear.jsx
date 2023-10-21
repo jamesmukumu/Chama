@@ -2,11 +2,15 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Cookie from "js-cookie"
+import { useNavigate } from "react-router-dom";
 function Sumspecificyear() {
+  let navigate = useNavigate()
   const [Year, setYear] = useState("");
   const [error, setError] = useState("");
   const [memberdata, setMemberdata] = useState([]);
   const [downloadData, setDownloadData] = useState(null);
+  const token = Cookie.get("Access cookie")
   function Selectyear(e) {
     setYear(e.target.value);
   }
@@ -16,6 +20,7 @@ function Sumspecificyear() {
     try {
       const response = await axios.get("http://localhost:5000/specificyear", {
         params: { year: Year },
+        headers:{Authorization:token}
       });
       if (response.data.message === "year found") {
         setMemberdata(response.data.data);
@@ -24,6 +29,10 @@ function Sumspecificyear() {
       if (response.data.message == "month not found") {
         setError("No total amount");
       }
+      else if(response.data.message=== "token expired"){
+          
+        navigate('/')
+        }
     } catch (error) {
       setError("Internal Server Error");
     }

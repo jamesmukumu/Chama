@@ -7,25 +7,25 @@ import { useAuth } from "../authorization";
 import Preloader from "../preloader";
 
 function Register() {
-  const [loading, setLoading] = useState(false)
-  const [registrationprocess,setRegristrationprocess] = useState(false)
-  let navigate = useNavigate()
-  const [username, setUsername] = useState("")
-  const [Email, setEmail] = useState("")
-  const [Password, setPassword] = useState("")
-  const [registermessage, setRegistermessage] = useState("")
-  const [passwordlength, setPasswordlength] = useState("")
+  const [loading, setLoading] = useState(false);
+  const [registrationprocess, setRegristrationprocess] = useState(false);
+  let navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [registermessage, setRegistermessage] = useState("");
+  const [passwordlength, setPasswordlength] = useState("");
   const { setIsAuthenticated } = useAuth();
 
   async function Postregister(e) {
     e.preventDefault();
     if (Password.length <= 5) {
-      setRegristrationprocess(false)
+      setRegristrationprocess(false);
       setPasswordlength("Password Must Be at least 5 charachters long");
     } else {
       try {
         const response = await axios.post(
-          "http://localhost:5000/register",
+          "http://telkom.onrender.com/register",
           {
             Username: username,
             password: Password,
@@ -40,16 +40,18 @@ function Register() {
             navigate("/nav");
           }, 3200);
           setIsAuthenticated(true);
-        } 
-        if(response.data.error==='email in use'){
-      setRegistermessage('Email or Username Already in Use..Try Registering with a different one')
-setLoading(false)
-setRegristrationprocess(false)
+        }
+        if (response.data.error === "email in use") {
+          setRegistermessage(
+            "Email or Username Already in Use..Try Registering with a different one"
+          );
+          setLoading(false);
+          setRegristrationprocess(false);
         }
       } catch (error) {
         setRegistermessage("Internal Server");
       }
-      setRegristrationprocess(true)
+      setRegristrationprocess(true);
     }
   }
 

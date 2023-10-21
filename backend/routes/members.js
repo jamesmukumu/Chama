@@ -1,41 +1,41 @@
 const express = require('express')
 const router = express.Router()
 const {Postmember,Patchinfo,Deletemember,Fetchallmembers,getMonthly,getbyFirstname,sumallMonths,getbySecondname,sumYearly} = require('../controllers/Members/member')
-
+const {validateTokenonlogin} = require('../auth/jwt')
 
 
 //posting a member
 router.post('/member',Postmember )
 
-
+ 
 //geting all members
-router.get('/allmembers',Fetchallmembers)
+router.get('/allmembers',validateTokenonlogin,Fetchallmembers)
 
 
 //get member by firstname
-router.get('/firstname',getbyFirstname)
+router.get('/firstname',validateTokenonlogin,getbyFirstname)
 
 
 //get by secondname
-router.get('/secondname',getbySecondname )
+router.get('/secondname',validateTokenonlogin,getbySecondname )
     
 //get month
-router.get('/monthget',getMonthly );
+router.get('/monthget',validateTokenonlogin,getMonthly );
       
 //find and delete
-router.delete('/delete',Deletemember )
+router.delete('/delete',validateTokenonlogin,Deletemember )
 
 //sum for all months
-router.get('/sumforallmonths', sumallMonths )
+router.get('/sumforallmonths',validateTokenonlogin, sumallMonths )
   
 
 
 //patch details 
 
-router.patch('/updatemember', Patchinfo)
+router.patch('/updatemember',validateTokenonlogin, Patchinfo)
     
 //sum for a specific year
 
-router.get('/specificyear',sumYearly)
+router.get('/specificyear',validateTokenonlogin,sumYearly)
 
 module.exports = router

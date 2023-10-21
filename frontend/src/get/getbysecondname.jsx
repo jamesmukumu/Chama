@@ -1,28 +1,36 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-
+import Cookie from "js-cookie"
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 function Secondname() {
+  let navigate = useNavigate()
   const [Secondname, setSecondname] = useState("");
   const [memberinfo, setMemberinfo] = useState([]);
   const [error, setError] = useState("");
   const [downloaddata, setDownloaddata] = useState(null);
+  const token = Cookie.get("Access cookie")
   async function GetSecondname(e) {
     e.preventDefault();
     try {
       const response = await axios.get("http://localhost:5000/secondname", {
         params: { secondname: Secondname },
+        headers:{Authorization:token}
       });
 
       if (response.data.message === "found by secondname") {
         setMemberinfo(response.data.data);
         setDownloaddata(response.data.data);
       }
+      else if(response.data.message=== "token expired"){
+          
+        navigate('/')
+        }
       if (response.data.error === "error") {
         setError("Member Not Found");
       }
+
     } catch (error) {
       setError("Internal Server Error");
     }

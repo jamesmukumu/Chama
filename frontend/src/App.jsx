@@ -13,14 +13,14 @@ import Firstname from "./get/getbyfirstname";
 
 import Deletemember from "./delete/deletion";
 import Nav from "./nav";
-import { AuthProvider } from "./authorization";
+
 function App(){
 
 
 
 return(
   <div>
-<AuthProvider>
+
 <BrowserRouter>
   <Routes>
 <Route path="/" element={<Login/>}/>
@@ -70,7 +70,7 @@ return(
 
 
 
-</AuthProvider>
+
 
 
 

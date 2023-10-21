@@ -2,6 +2,10 @@ const Member = require('../../schemas/members')
 
 
 
+
+
+
+
 //post member
 async function Postmember(req,res){
     try {
@@ -205,5 +209,6 @@ async function getMonthly(req, res){
         getbyFirstname,
         getbySecondname,
         sumYearly,
-        sumallMonths
+        sumallMonths,
+       
 }

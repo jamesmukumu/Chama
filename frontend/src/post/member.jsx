@@ -43,9 +43,12 @@ function Member() {
         setTimeout(() => {
           navigate("/nav");
         }, 4000);
-      } else {
-        setSuccessmessage("Error try again...");
+      } else if(response.status===401){
+     setSuccessmessage("Not authorized to post")
+     navigate('/')
       }
+        
+      
     } catch (error) {
       setSuccessmessage("Internal Server Error");
     }
