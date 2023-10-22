@@ -1,11 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const {Postmember,Patchinfo,Deletemember,Fetchallmembers,getMonthly,getbyFirstname,sumallMonths,getbySecondname,sumYearly} = require('../controllers/Members/member')
+const {Postmember,Patchinfo,Deletemember,Fetchallmembers,getMonthly,getbyFirstname,sumallMonths,getbySecondname,sumYearly, countmembersMonthly} = require('../controllers/Members/member')
 const {validateTokenonlogin} = require('../auth/jwt')
 
 
 //posting a member
 router.post('/member',Postmember )
+
+
+//count members who contributed monthly
+router.get('/countmembers',validateTokenonlogin,countmembersMonthly)
+
 
  
 //geting all members

@@ -148,7 +148,7 @@ select {
 }
 
 button {
-  background-color: #007bff; /* Button background color */
+  background-color: #007bff; 
   color: white;
   border: none;
   padding: 10px 20px;
@@ -176,6 +176,35 @@ button:hover {
 
 span{
   color: #ff5733;
+}
+.count input{
+  width: 77%;
+  height: 23px;
+  border-radius: 10px;
+  padding-bottom: 10px;
+  text-decoration: none;
+}
+.count{
+  text-align: center;
+
+}
+
+.member-info {
+  background-color: #f0f0f073; 
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.433); 
+  padding-top: 20px; 
+  margin: 10px; 
+}
+.count div{
+  margin: 20px;
+}
+.count div strong{
+  text-decoration: underline;
+  font-size: 17.56657889px;
+}
+.count button{
+  background-color: green;
+  border-radius: 3.5777777777777px;
 }
 form input{
  width: 20%;

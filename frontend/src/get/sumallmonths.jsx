@@ -3,11 +3,14 @@ import axios from "axios";
 import Cookie from "js-cookie"
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import "../index.css"
 function Sumamount() {
   let navigate = useNavigate()
   const [Month, setMonth] = useState([]);
   const [error, setError] = useState("");
-  const [downloadData, setDownloadData] = useState(null);
+  const [summembers,setSummembers] = useState([])
+  const [nullmsg,setNullmsg] = useState('')
+  const [querymonth,setQuerymonth] = useState('')
   const token = Cookie.get("Access cookie")
   useEffect(() => {
     async function Getmembers() {
@@ -25,6 +28,13 @@ function Sumamount() {
           
           navigate('/')
           }
+          else if(response.data.message==="No token found"){
+            navigate('/')
+              }
+              else if(response.data.error==="Invalid token"){
+               navigate('/')
+              }
+            
         
         
         
@@ -39,20 +49,45 @@ function Sumamount() {
     Getmembers();
   }, []);
 
-  function downloadJSON() {
-    if (downloadData) {
-      const jsonData = JSON.stringify(downloadData, null, 2);
-      const blob = new Blob([jsonData], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "month_data.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+//count members
+async function countMembers(){
+try {
+const response = await axios.get("http://localhost:5000/countmembers",{
+  params:{month:querymonth},
+  headers:{Authorization:token}
+})
+if(response.data.message==="Sum all members"){
+setSummembers(response.data.data)
+}
+else if(response.data.message==="No members counted"){
+setNullmsg("No member found")
+} 
+else if(response.data.message=== "token expired"){
+          
+  navigate('/')
   }
+  else if(response.data.message==="No token found"){
+navigate('/')
+  }
+  else if(response.data.error==="Invalid token"){
+   navigate('/')
+  }
+
+
+} catch (error) {
+  setNullmsg("Internal server error")
+}
+
+
+
+}
+
+
+
+
+
+
+ 
 
   return (
     <div className="container">
@@ -66,9 +101,34 @@ function Sumamount() {
           </p>
         </div>
       ))}
+      <div className="count">
+        <div>
+        <strong>Count Members Who Contributed To a specific month</strong>
+        </div>
+        <input type="text" 
+        onChange={(e)=>setQuerymonth(e.target.value)}
+       placeholder="Enter month eg October,November"
+        />
+     
+        <button onClick={countMembers}>find number</button>
 
+        {summembers.map((item)=>(
+
+      <div className="member-info">
+        <p>Month:<span>{item._id}</span></p>
+        <p>No of members who contributed:<span>{item.month}</span></p>
+  
+      </div>
+
+        ))}
+      </div>
+  <p>{nullmsg}</p>
       <Link to="/">Home</Link>
-      <button onClick={downloadJSON}>Download</button>
+      
+
+
+
+  
     </div>
   );
 }

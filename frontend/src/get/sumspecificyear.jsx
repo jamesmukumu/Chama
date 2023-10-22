@@ -33,6 +33,13 @@ function Sumspecificyear() {
           
         navigate('/')
         }
+        else if(response.data.message==="No token found"){
+          navigate('/')
+            }
+            else if(response.data.error==="Invalid token"){
+             navigate('/')
+            }
+          
     } catch (error) {
       setError("Internal Server Error");
     }

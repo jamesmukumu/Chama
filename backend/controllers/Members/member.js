@@ -197,7 +197,39 @@ async function getMonthly(req, res){
             }
             }
             
+
+
+
+            // count documents based monthlt
+
+
+            async function countmembersMonthly(req,res){
+          try {
+        const aggregateMontly = [
+       { $match:{month:{$regex:new RegExp(req.query.month,'i')}}},
+       {$group:{_id:`$month`,month:{$sum:1}}}
+
+        ]
+
+       const countedMembers = await Member.aggregate(aggregateMontly)
+       if(countedMembers.length===0){
+      return res.status(200).json({message:"No members counted"})
+       }
+       else{
+        return res.status(200).json({message:"Sum all members",data:countedMembers})
+       }
+
+
             
+          } catch (error) {
+            return res.status(500).json({error})
+          }
+
+
+            }
+            //delete member monthly 
+
+
 
 
             module.exports = {
@@ -210,5 +242,6 @@ async function getMonthly(req, res){
         getbySecondname,
         sumYearly,
         sumallMonths,
+        countmembersMonthly
        
 }

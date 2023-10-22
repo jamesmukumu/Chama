@@ -52,7 +52,7 @@ async function Register(req,res){
                 return res.status(200).json({ error: 'Invalid password' });
             } else {
                 const token = jwt.sign({ Username: foundUser.Username }, process.env.jwtPassword, { expiresIn: '1h' });
-                // Set the token in the response header with the Bearer prefix
+            
                 res.setHeader('Authorization',token);
                 res.status(200).json({ message: 'Successfully logged in', token });
             }

@@ -36,9 +36,17 @@ function Nav() {
           setImagedata(response.data.data);
           setLoading(false);
         }
-        else if(response.status===401){
-      setErrormsg("Unauthorized access denied")
-        }
+        else if(response.data.message==="No token found"){
+          navigate('/')
+            }
+            else if(response.data.error==="Invalid token"){
+             navigate('/')
+            }
+          
+        else if(response.data.message=== "token expired"){
+            
+          navigate('/')
+          }
       } catch (error) {
         console.log(error)
       }

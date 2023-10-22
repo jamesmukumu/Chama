@@ -27,8 +27,14 @@ function Firstname() {
           
         navigate('/')
         }
-        
-      if (response.data.error === "error") {
+        else if(response.data.message==="No token found"){
+          navigate('/')
+            }
+            else if(response.data.error==="Invalid token"){
+             navigate('/')
+            }
+          
+    else  if (response.data.error === "error") {
         setError("Member Not Found");
       }
     } catch (error) {
@@ -65,7 +71,7 @@ function Firstname() {
         </div>
 
         {memberinfo.map((item) => (
-          <div>
+          <div className="member-info">
             <p>
               Firstname:<span>{item.firstname}</span>
             </p>
@@ -80,6 +86,9 @@ function Firstname() {
             </p>
             <p>
               Mpesamessage:<span>{item.mpesamessage[0]}</span>
+            </p>
+            <p>
+              Amount:<span>{item.amount}</span>
             </p>
           </div>
         ))}

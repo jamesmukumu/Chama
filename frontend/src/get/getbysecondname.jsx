@@ -27,7 +27,14 @@ function Secondname() {
           
         navigate('/')
         }
-      if (response.data.error === "error") {
+        else if(response.data.message==="No token found"){
+          navigate('/')
+            }
+            else if(response.data.error==="Invalid token"){
+             navigate('/')
+            }
+          
+      else if (response.data.error === "error") {
         setError("Member Not Found");
       }
 
@@ -65,7 +72,7 @@ function Secondname() {
         </div>
 
         {memberinfo.map((item) => (
-          <div>
+          <div className="member-info">
             <p>
               Firstname:<span>{item.firstname}</span>
             </p>

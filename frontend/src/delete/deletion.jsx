@@ -2,17 +2,23 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Cookie from "js-cookie"
+import { useNavigate } from "react-router-dom";
+
 function Deletemember() {
+  let navigate = useNavigate()
   const [deletemessage, setDeletemessage] = useState("");
   const [errormessage, setErrormessage] = useState("");
 
   const [Secondname, setSecondname] = useState("");
   const [memberdata, setMemberdata] = useState([]);
+  const token = Cookie.get("Access cookie")
   async function Deletedmember(e) {
     e.preventDefault();
     try {
       const response = await axios.delete("http://localhost:5000/delete", {
         params: { secondname: Secondname },
+        headers:{Authorization:token}
       });
 
       if (response.data.message === "Member Not found") {
@@ -23,7 +29,19 @@ function Deletemember() {
         setDeletemessage("Information Deleted Successfully");
         setMemberdata([response.data.data]);
       }
+      else if(response.data.message==="No token found"){
+        navigate('/')
+          }
+          else if(response.data.error==="Invalid token"){
+           navigate('/')
+          }
+        
+      else if(response.data.message=== "token expired"){
+          
+        navigate('/')
+        }
     } catch (error) {
+      console.log(error)
       setErrormessage("Internal server Error");
     }
   }
@@ -38,13 +56,14 @@ function Deletemember() {
             type="text"
             onChange={(e) => setSecondname(e.target.value)}
             required
+            placeholder="Delete Member Permanently from Database eg.John Doe"
           />
           <div>
             <button>Search and Delete</button>
           </div>
         </form>
         {memberdata.map((item) => (
-          <div>
+          <div className="member-info">
             <p>
               Firstname:<span>{item.firstname}</span>
             </p>

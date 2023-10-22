@@ -1,21 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useAuth } from "../authorization";
+
 import Preloader from "../preloader";
 
 function Register() {
   const [loading, setLoading] = useState(false);
   const [registrationprocess, setRegristrationprocess] = useState(false);
-  let navigate = useNavigate();
+ 
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [registermessage, setRegistermessage] = useState("");
   const [passwordlength, setPasswordlength] = useState("");
-  const { setIsAuthenticated } = useAuth();
+ 
 
   async function Postregister(e) {
     e.preventDefault();
@@ -25,7 +24,7 @@ function Register() {
     } else {
       try {
         const response = await axios.post(
-          "http://telkom.onrender.com/register",
+          "http://localhost:5000/register",
           {
             Username: username,
             password: Password,
@@ -39,7 +38,7 @@ function Register() {
           setTimeout(() => {
             navigate("/nav");
           }, 3200);
-          setIsAuthenticated(true);
+         
         }
         if (response.data.error === "email in use") {
           setRegistermessage(

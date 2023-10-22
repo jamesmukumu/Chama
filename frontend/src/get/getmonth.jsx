@@ -41,7 +41,13 @@ function Getmonth() {
         setDownloadData(response.data.data);
       }
 
-
+      else if(response.data.message==="No token found"){
+        navigate('/')
+          }
+          else if(response.data.error==="Invalid token"){
+           navigate('/')
+          }
+        
       else if(response.data.message=== "token expired"){
           
         navigate('/')
@@ -73,7 +79,7 @@ function Getmonth() {
         </div>
 
         {info.map((item) => (
-          <div key={item._id}>
+          <div className="member-info">
             <p>
               id:<span>{item._id}</span>
             </p>

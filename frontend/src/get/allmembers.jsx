@@ -33,6 +33,13 @@ function Allmembers() {
           
         navigate('/')
         }
+        else if(response.data.message==="No token found"){
+          navigate('/')
+            }
+            else if(response.data.error==="Invalid token"){
+             navigate('/')
+            }
+          
         
         
         else {
@@ -66,7 +73,7 @@ function Allmembers() {
         ) : (
           <tbody>
             {allmembers.map((item) => (
-              <tr key={item.id}> {/* Make sure to include a unique key for each item */}
+              <tr> 
                 <td>{item.firstname}</td>
                 <td>{item.secondname}</td>
                 <td>{item.amount}</td>
