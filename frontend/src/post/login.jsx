@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import Preloader from "../preloader";
-import Cookie from "js-cookie"
+import Cookie from "js-cookie";
 
 function Login() {
   let navigate = useNavigate();
@@ -13,9 +13,9 @@ function Login() {
   const [username, setUsername] = useState("");
   const [errormsg, setErrormsg] = useState("");
   const [passwordlength, setPasswordLength] = useState("");
- 
+
   const [loginInProgress, setLoginInProgress] = useState(false);
- 
+
   async function Postlogin(e) {
     e.preventDefault();
     setLoginInProgress(true);
@@ -31,12 +31,11 @@ function Login() {
         });
 
         if (response.data.message === "Successfully logged in") {
-          const token = response.data.token
-          Cookie.set("Access cookie",token,{expires:1/24})
-          axios.defaults.headers.common["Authorization"] = token
-        
+          const token = response.data.token;
+          Cookie.set("Access cookie", token, { expires: 1 / 24 });
+          axios.defaults.headers.common["Authorization"] = token;
+
           setLoading(true);
-          
 
           setTimeout(() => {
             navigate("/nav");

@@ -131,6 +131,10 @@ form {
 
   margin: 0 auto;
 }
+form input::placeholder{
+  text-align: center;
+  font-weight: bolder;
+}
 
 h1 {
   color: #333; /* Header text color */

@@ -2,23 +2,24 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Cookie from "js-cookie"
+import Cookie from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 function Deletemember() {
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const [deletemessage, setDeletemessage] = useState("");
   const [errormessage, setErrormessage] = useState("");
-
+  const [Firstname, setFirstname] = useState("");
+  const [Month, setMonth] = useState("");
   const [Secondname, setSecondname] = useState("");
   const [memberdata, setMemberdata] = useState([]);
-  const token = Cookie.get("Access cookie")
+  const token = Cookie.get("Access cookie");
   async function Deletedmember(e) {
     e.preventDefault();
     try {
       const response = await axios.delete("http://localhost:5000/delete", {
-        params: { secondname: Secondname },
-        headers:{Authorization:token}
+        params: { secondname: Secondname, firstname: Firstname, month: Month },
+        headers: { Authorization: token },
       });
 
       if (response.data.message === "Member Not found") {
@@ -28,20 +29,15 @@ function Deletemember() {
       if (response.data.message === "Deleted") {
         setDeletemessage("Information Deleted Successfully");
         setMemberdata([response.data.data]);
+      } else if (response.data.message === "No token found") {
+        navigate("/");
+      } else if (response.data.error === "Invalid token") {
+        navigate("/");
+      } else if (response.data.message === "token expired") {
+        navigate("/");
       }
-      else if(response.data.message==="No token found"){
-        navigate('/')
-          }
-          else if(response.data.error==="Invalid token"){
-           navigate('/')
-          }
-        
-      else if(response.data.message=== "token expired"){
-          
-        navigate('/')
-        }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setErrormessage("Internal server Error");
     }
   }
@@ -56,8 +52,25 @@ function Deletemember() {
             type="text"
             onChange={(e) => setSecondname(e.target.value)}
             required
-            placeholder="Delete Member Permanently from Database eg.John Doe"
+            placeholder="eg Mukumu"
           />
+          <label>Enter Firstname:</label>
+          <input
+            type="text"
+            onChange={(e) => setFirstname(e.target.value)}
+            required
+            placeholder="eg James"
+          /> 
+
+
+          <label>Enter Month:</label>
+          <input
+            type="text"
+            onChange={(e) => setMonth(e.target.value)}
+            required
+            placeholder="eg February"
+          />
+          
           <div>
             <button>Search and Delete</button>
           </div>

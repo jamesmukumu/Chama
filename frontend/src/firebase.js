@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCS2vkW8Q9vGAZprcnrv-x0f72aeH5dBqM",
-  authDomain: "mymum-d6bd7.firebaseapp.com",
-  projectId: "mymum-d6bd7",
-  storageBucket: "mymum-d6bd7.appspot.com",
-  messagingSenderId: "187409541447",
-  appId: "1:187409541447:web:43d11ee82847df61848462"
+  apiKey: "AIzaSyBxGvrW3-A9jEJ5nYU5g6AlbqhhT1fEzpc",
+  authDomain: "telkom-20394.firebaseapp.com",
+  projectId: "telkom-20394",
+  storageBucket: "telkom-20394.appspot.com",
+  messagingSenderId: "929604815923",
+  appId: "1:929604815923:web:98b924c19e159de6532746"
 };
 
 // Initialize Firebase

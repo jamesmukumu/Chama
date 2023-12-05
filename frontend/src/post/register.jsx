@@ -8,13 +8,12 @@ import Preloader from "../preloader";
 function Register() {
   const [loading, setLoading] = useState(false);
   const [registrationprocess, setRegristrationprocess] = useState(false);
- 
+
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [registermessage, setRegistermessage] = useState("");
   const [passwordlength, setPasswordlength] = useState("");
- 
 
   async function Postregister(e) {
     e.preventDefault();
@@ -23,14 +22,11 @@ function Register() {
       setPasswordlength("Password Must Be at least 5 charachters long");
     } else {
       try {
-        const response = await axios.post(
-          "http://localhost:5000/register",
-          {
-            Username: username,
-            password: Password,
-            email: Email,
-          }
-        );
+        const response = await axios.post("http://localhost:5000/register", {
+          Username: username,
+          password: Password,
+          email: Email,
+        });
 
         if (response.data.message === "Saved") {
           setRegistermessage("Registered Successfully");
@@ -38,7 +34,6 @@ function Register() {
           setTimeout(() => {
             navigate("/nav");
           }, 3200);
-         
         }
         if (response.data.error === "email in use") {
           setRegistermessage(

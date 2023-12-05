@@ -2,39 +2,33 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Cookie from "js-cookie"
+import Cookie from "js-cookie";
 import { useNavigate } from "react-router-dom";
 function Firstname() {
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const [Firstname, setFirstname] = useState("");
   const [memberinfo, setMemberinfo] = useState([]);
   const [error, setError] = useState("");
   const [downloadData, setDownloadData] = useState(null);
-  const token = Cookie.get("Access cookie")
+  const token = Cookie.get("Access cookie");
   async function Getfirstname(e) {
     e.preventDefault();
     try {
       const response = await axios.get("http://localhost:5000/firstname", {
         params: { firstname: Firstname },
-        headers:{Authorization:token}
+        headers: { Authorization: token },
       });
 
       if (response.data.message === "found by firstname") {
         setMemberinfo(response.data.data);
         setDownloadData(response.data.data);
-      }
-      else if(response.data.message=== "token expired"){
-          
-        navigate('/')
-        }
-        else if(response.data.message==="No token found"){
-          navigate('/')
-            }
-            else if(response.data.error==="Invalid token"){
-             navigate('/')
-            }
-          
-    else  if (response.data.error === "error") {
+      } else if (response.data.message === "token expired") {
+        navigate("/");
+      } else if (response.data.message === "No token found") {
+        navigate("/");
+      } else if (response.data.error === "Invalid token") {
+        navigate("/");
+      } else if (response.data.error === "error") {
         setError("Member Not Found");
       }
     } catch (error) {

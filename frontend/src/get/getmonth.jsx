@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Cookie from "js-cookie"
+import Cookie from "js-cookie";
 import { useNavigate } from "react-router-dom";
 function Getmonth() {
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   const [Month, setMonth] = useState("");
   const [info, setInfo] = useState([]);
   const [downloadData, setDownloadData] = useState(null);
-  const token = Cookie.get("Access cookie")
+  const token = Cookie.get("Access cookie");
   function Selectmonth(e) {
     setMonth(e.target.value);
   }
@@ -33,25 +33,19 @@ function Getmonth() {
     try {
       const response = await axios.get("http://localhost:5000/monthget", {
         params: { month: Month },
-        headers:{Authorization:token}
+        headers: { Authorization: token },
       });
 
       if (response.data.message === "Found month") {
         setInfo(response.data.data);
         setDownloadData(response.data.data);
+      } else if (response.data.message === "No token found") {
+        navigate("/");
+      } else if (response.data.error === "Invalid token") {
+        navigate("/");
+      } else if (response.data.message === "token expired") {
+        navigate("/");
       }
-
-      else if(response.data.message==="No token found"){
-        navigate('/')
-          }
-          else if(response.data.error==="Invalid token"){
-           navigate('/')
-          }
-        
-      else if(response.data.message=== "token expired"){
-          
-        navigate('/')
-        }
     } catch (error) {
       console.error(error);
     }

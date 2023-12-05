@@ -110,16 +110,23 @@ async function getMonthly(req, res){
   async function Deletemember(req,res){
     try {
     const deleteMember = req.query.secondname 
-    const Foundmember  = await Member.findOneAndDelete({secondname:{$regex: new RegExp(deleteMember,'i')}})  
+    const Foundmember  = await Member.findOneAndDelete({$and:[
+      {secondname:{$regex: new RegExp(deleteMember,'i')}},
+      {month:{$regex:new RegExp(req.query.month,'i')}},
+      {firstname:{$regex :new RegExp(req.query.firstname,'i')}}
+
+
+
+    ]})  
     if(!Foundmember){
-    res.json({message:'Member Not found'})
+    res.status(200).json({message:'Member Not found'})
     }
     if(Foundmember){
-    res.json({message:'Deleted',data:Foundmember})
+    res.status(200).json({message:'Deleted',data:Foundmember})
     
     }
     } catch (error) {
-       res.json({error:'Error'}) 
+       res.status(500).json({error:'Error'}) 
     }
     
     }
